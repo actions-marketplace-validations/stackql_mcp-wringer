@@ -143,13 +143,13 @@ jobs:
         env:
           FIXTURE: ${{ github.workspace }}/fixtures/stdio-server.mjs
         run: |
-          set -uo pipefail
+          set -euo pipefail
+          status=0
           npx --yes --registry=https://registry.npmjs.org/ @stackql/mcp-wringer@latest run \
             --spec 2025-11-25 --profile quick --seed 20261118 --fail-on high \
             --env MCP_WRINGER_DEFECTS=exit-on-decode-error \
             --report-dir "$RUNNER_TEMP/npm-defective" \
-            -- node "$FIXTURE" --revision 2025-11-25
-          status=$?
+            -- node "$FIXTURE" --revision 2025-11-25 || status=$?
           if [ "$status" -ne 1 ]; then
             echo "expected exit code 1 for a high-severity finding, got ${status}" >&2
             exit 1

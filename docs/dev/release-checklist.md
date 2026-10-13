@@ -1,6 +1,6 @@
 # Release checklist
 
-The maintainer publishes npm releases manually with interactive 2FA and lists the Action through the GitHub release form. Agents do not create tags or releases, publish packages, or change repository settings. The current procedure is documented in the [README](../../README.md#publishing-releases); it supersedes the trusted-publishing setup in Work order 001 and the historical M6 report.
+The maintainer publishes npm releases manually with interactive 2FA and lists the Action through the GitHub release form. Agents do not create tags or releases, publish packages, or change repository settings. The current procedure is documented in the [publishing guide](../publishing.md); it supersedes the trusted-publishing setup in Work order 001 and the historical M6 report.
 
 ## npm account setup
 
@@ -11,9 +11,9 @@ The release job has only `contents: read`. It verifies the tag against the packa
 ## Prepare a release
 
 1. Confirm the working tree and intended release commit are clean and reviewed.
-2. Update `package.json` version and the lockfile with the package manager when needed, then run `npm ci` and all preparation checks listed in the README, including Action self-tests.
+2. Update `package.json` version and the lockfile with the package manager when needed, then run `npm ci` and all preparation checks listed in the [publishing guide](../publishing.md), including Action self-tests.
 3. Review `git diff`, confirm `dist-action/` matches the Action source, and ensure no credentials or generated reports are included.
-4. Merge the release commit to the default branch and confirm CI passes. Publish from a clean checkout of that commit using the README's npm login and publish commands, completing interactive 2FA.
+4. Merge the release commit to the default branch and confirm CI passes. Publish from a clean checkout of that commit using the npm login and publish commands in the [publishing guide](../publishing.md), completing interactive 2FA.
 5. Verify the exact published npm version and CLI before proceeding to Marketplace publication.
 6. The maintainer creates the immutable `vX.Y.Z` tag and GitHub release through the Marketplace release form. The tag must match `package.json` exactly; publishing the release triggers the validation-only `.github/workflows/release.yml`.
 7. Confirm the validation workflow succeeds, verify the Marketplace listing, and then create or update the moving `vX` tag. Do not overwrite or move a published npm version or immutable tag.
@@ -21,4 +21,4 @@ The release job has only `contents: read`. It verifies the tag against the packa
 
 ## GitHub Marketplace
 
-Follow the README's Marketplace steps, including the Developer Agreement, metadata/name validation, categories, and exact release commit selection. Marketplace publication must be explicitly approved and performed by the maintainer; the release validation workflow does not list the Action. The published Action is consumed as a pull request gate by the StackQL repository's `mcp-wringer` workflow.
+Follow the [publishing guide's Marketplace steps](../publishing.md#publish-the-github-marketplace-action), including the Developer Agreement, metadata/name validation, categories, and exact release commit selection. Marketplace publication must be explicitly approved and performed by the maintainer; the release validation workflow does not list the Action. The published Action is consumed as a pull request gate by the StackQL repository's `mcp-wringer` workflow.
